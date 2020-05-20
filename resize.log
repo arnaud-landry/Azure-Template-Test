@@ -1,0 +1,85 @@
+PS C:\Users\arnau\Code\iA\Azure\Test-VM-Update-OSDisk-Size> $rgName = 'test2'
+PS C:\Users\arnau\Code\iA\Azure\Test-VM-Update-OSDisk-Size> $vmName = 'simpleLinuxVM'
+PS C:\Users\arnau\Code\iA\Azure\Test-VM-Update-OSDisk-Size> $vm = Get-AzVM -ResourceGroupName $rgName -Name $vmName
+PS C:\Users\arnau\Code\iA\Azure\Test-VM-Update-OSDisk-Size> Stop-AzVM -ResourceGroupName $rgName -Name $vmName
+
+Virtual machine stopping operation
+This cmdlet will stop the specified virtual machine. Do you want to continue?
+[Y] Yes  [N] No  [S] Suspend  [?] Help (default is "Y"): Y
+
+OperationId : 5322d540-a6e4-4755-b0d0-ba79eeeadfd5
+Status      : Succeeded
+StartTime   : 5/20/2020 9:23:53 AM
+EndTime     : 5/20/2020 9:24:08 AM
+Error       :
+
+
+PS C:\Users\arnau\Code\iA\Azure\Test-VM-Update-OSDisk-Size> $disk= Get-AzDisk -ResourceGroupName $rgName -DiskName $vm.StorageProfile.OsDisk.Name
+PS C:\Users\arnau\Code\iA\Azure\Test-VM-Update-OSDisk-Size> $disk.DiskSizeGB = 42
+PS C:\Users\arnau\Code\iA\Azure\Test-VM-Update-OSDisk-Size> Update-AzDisk -ResourceGroupName $rgName -Disk $disk -DiskName $disk.Name
+
+ResourceGroupName            : test2
+ManagedBy                    : /subscriptions/74e40b38-b6d3-41e9-8e10-c9c61be0e198/resourceGroups/test2/providers/Microsoft.Compute/virtualMachines/simpleLinuxVM
+Sku                          : Microsoft.Azure.Management.Compute.Models.DiskSku
+Zones                        :
+TimeCreated                  : 5/20/2020 1:06:46 PM
+OsType                       : Linux
+HyperVGeneration             : V1
+CreationData                 : Microsoft.Azure.Management.Compute.Models.CreationData
+DiskSizeGB                   : 42
+DiskSizeBytes                : 45097156608
+UniqueId                     : d0d4a394-e221-4425-83e9-099429c15f73
+EncryptionSettingsCollection :
+ProvisioningState            : Succeeded
+DiskIOPSReadWrite            : 500
+DiskMBpsReadWrite            : 60
+DiskState                    : Reserved
+Encryption                   : Microsoft.Azure.Management.Compute.Models.Encryption
+Id                           : /subscriptions/74e40b38-b6d3-41e9-8e10-c9c61be0e198/resourceGroups/test2/providers/Microsoft.Compute/disks/simpleLinuxVM_disk1_d0d4a394e221442583e9099429c15f73
+Name                         : simpleLinuxVM_disk1_d0d4a394e221442583e9099429c15f73
+Type                         : Microsoft.Compute/disks
+Location                     : eastus
+Tags                         : {}
+
+PS C:\Users\arnau\Code\iA\Azure\Test-VM-Update-OSDisk-Size> Start-AzVM -ResourceGroupName $rgName -Name $vmName
+
+OperationId : 455aabce-0413-458a-90b7-6ff3cfa9da39
+Status      : Succeeded
+StartTime   : 5/20/2020 9:25:35 AM
+EndTime     : 5/20/2020 9:25:54 AM
+Error       :
+
+
+PS C:\Users\arnau\Code\iA\Azure\Test-VM-Update-OSDisk-Size> New-AzResourceGroupDeployment -ResourceGroupName "test2" -TemplateFile .\azuredeploy.json -TemplateParameterFile .\azuredeploy.parameters.json
+
+DeploymentName          : azuredeploy
+ResourceGroupName       : test2
+ProvisioningState       : Succeeded
+Timestamp               : 5/20/2020 1:33:16 PM
+Mode                    : Incremental
+TemplateLink            :
+Parameters              :
+                          Name                        Type                       Value
+                          ==========================  =========================  ==========
+                          vmName                      String                     simpleLinuxVM
+                          adminUsername               String                     arnaud
+                          authenticationType          String                     password
+                          adminPasswordOrKey          SecureString
+                          dnsLabelPrefix              String                     vm202005200846
+                          ubuntuOSVersion             String                     18.04-LTS
+                          location                    String                     eastus
+                          vmSize                      String                     Standard_B2s
+                          virtualNetworkName          String                     vNet
+                          subnetName                  String                     Subnet
+                          networkSecurityGroupName    String                     SecGroupNet
+                          osDiskSizeGB                Int                        42
+
+Outputs                 :
+                          Name             Type                       Value
+                          ===============  =========================  ==========
+                          adminUsername    String                     arnaud
+                          hostname         String                     vm202005200846.eastus.cloudapp.azure.com
+                          sshCommand       String                     ssh arnaud@vm202005200846.eastus.cloudapp.azure.com
+
+DeploymentDebugLogLevel :
+

@@ -1,0 +1,1 @@
+New-AzResourceGroupDeployment -ResourceGroupName "test2" -TemplateFile .\azuredeploy.json -TemplateParameterFile .\azuredeploy.parameters.json 

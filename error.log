@@ -1,0 +1,78 @@
+PS C:\Users\arnau\Code\iA\Azure\Test-VM-Update-OSDisk-Size> New-AzResourceGroupDeployment -ResourceGroupName "test2" -TemplateFile .\azuredeploy.json -TemplateParameterFile .\azuredeploy.parameters.json
+New-AzResourceGroupDeployment: 9:10:43 AM - Resource Microsoft.Compute/virtualMachines 'simpleLinuxVM' failed with message '{
+  "error": {
+    "code": "Conflict",
+    "message": "Disk resizing is allowed only when creating a VM or when the VM is deallocated.",
+    "target": "disk.diskSizeGB"
+  }
+}'
+New-AzResourceGroupDeployment: 9:10:43 AM - Template output evaluation skipped: at least one resource deployment operation failed. Please list deployment operations for details. Please see https://aka.ms/DeployOperations for usage details.
+New-AzResourceGroupDeployment: 9:10:43 AM - Template output evaluation skipped: at least one resource deployment operation failed. Please list deployment operations for details. Please see https://aka.ms/DeployOperations for usage details.
+
+DeploymentName          : azuredeploy
+ResourceGroupName       : test2
+ProvisioningState       : Failed
+Timestamp               : 5/20/2020 1:10:39 PM
+Mode                    : Incremental
+TemplateLink            :
+Parameters              :
+                          Name                        Type                       Value
+                          ==========================  =========================  ==========
+                          vmName                      String                     simpleLinuxVM
+                          adminUsername               String                     arnaud
+                          authenticationType          String                     password
+                          adminPasswordOrKey          SecureString
+                          dnsLabelPrefix              String                     vm202005200846
+                          ubuntuOSVersion             String                     18.04-LTS
+                          location                    String                     eastus
+                          vmSize                      String                     Standard_B2s
+                          virtualNetworkName          String                     vNet
+                          subnetName                  String                     Subnet
+                          networkSecurityGroupName    String                     SecGroupNet
+                          osDiskSizeGB                Int                        50
+
+Outputs                 :
+DeploymentDebugLogLevel :
+
+
+
+
+
+PS C:\Users\arnau\Code\iA\Azure\Test-VM-Update-OSDisk-Size> New-AzResourceGroupDeployment -ResourceGroupName "test2" -TemplateFile .\azuredeploy.json -TemplateParameterFile .\azuredeploy.parameters.json
+New-AzResourceGroupDeployment: 9:13:07 AM - Resource Microsoft.Compute/virtualMachines 'simpleLinuxVM' failed with message '{
+  "error": {
+    "code": "ResizeDiskError",
+    "message": "Managed disk resize via Virtual Machine 'simpleLinuxVM' is not allowed. Please resize disk resource at /subscriptions/74e40b38-b6d3-41e9-8e10-c9c61be0e198/resourceGroups/TEST2/providers/Microsoft.Compute/disks/simpleLinuxVM_disk1_d0d4a394e221442583e9099429c15f73.",
+    "target": "disk.diskSizeGB"
+  }
+}'
+New-AzResourceGroupDeployment: 9:13:07 AM - Template output evaluation skipped: at least one resource deployment operation failed. Please list deployment operations for details. Please see https://aka.ms/DeployOperations for usage details.
+New-AzResourceGroupDeployment: 9:13:07 AM - Template output evaluation skipped: at least one resource deployment operation failed. Please list deployment operations for details. Please see https://aka.ms/DeployOperations for usage details.
+
+DeploymentName          : azuredeploy
+ResourceGroupName       : test2
+ProvisioningState       : Failed
+Timestamp               : 5/20/2020 1:13:06 PM
+Mode                    : Incremental
+TemplateLink            :
+Parameters              :
+                          Name                        Type                       Value
+                          ==========================  =========================  ==========
+                          vmName                      String                     simpleLinuxVM
+                          adminUsername               String                     arnaud
+                          authenticationType          String                     password
+                          adminPasswordOrKey          SecureString
+                          dnsLabelPrefix              String                     vm202005200846
+                          ubuntuOSVersion             String                     18.04-LTS
+                          location                    String                     eastus
+                          vmSize                      String                     Standard_B2s
+                          virtualNetworkName          String                     vNet
+                          subnetName                  String                     Subnet
+                          networkSecurityGroupName    String                     SecGroupNet
+                          osDiskSizeGB                Int                        50
+
+Outputs                 :
+DeploymentDebugLogLevel :
+
+
+
