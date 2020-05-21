@@ -10,8 +10,7 @@ $vm = Get-AzVM -ResourceGroupName $rgName -Name $vmName
 Stop-AzVM -ResourceGroupName $rgName -Name $vmName
 
 $disk= Get-AzDisk -ResourceGroupName $rgName -DiskName $vm.StorageProfile.OsDisk.Name
-$disk.DiskSizeGB = 42
+$disk.DiskSizeGB = 50
 Update-AzDisk -ResourceGroupName $rgName -Disk $disk -DiskName $disk.Name
 
 Start-AzVM -ResourceGroupName $rgName -Name $vmName
-
